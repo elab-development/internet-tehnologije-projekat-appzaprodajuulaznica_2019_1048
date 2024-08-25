@@ -31,9 +31,9 @@ function LoginPage(addToken) {
                         "auth_token",
                         response.data.access_token
                     );
-                    addToken(response.data.access_token);
-                    navigate("/");
                 }
+                addToken(response.data.access_token);
+                navigate("/");
             })
             .catch((error) => {
                 console.log(error);
