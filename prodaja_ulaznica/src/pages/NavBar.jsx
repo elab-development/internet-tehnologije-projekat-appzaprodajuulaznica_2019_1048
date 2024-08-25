@@ -1,6 +1,24 @@
 import React from "react";
+import axios from "axios";
 
 const NavBar = () => {
+    function logoutUser() {
+        axios
+            .post("api/logout", undefined, {
+                headers: {
+                    Authorization: "Bearer" + window.sessionStorage.getItem("auth_token"),
+                },
+            })
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                window.sessionStorage.setItem("auth_token", null);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    }
+
     return (
         <nav className="navbar navbar-expand-xl navbar-dark bg-dark">
             <div className="container-fluid">
@@ -35,6 +53,19 @@ const NavBar = () => {
                                 Gallery
                             </a>
                         </li>
+                        {window.sessionStorage.getItem("auth_token") == null ? (
+                            <li className="nav-item">
+                                <a className="nav-link" href="/login" onClick={logoutUser}>
+                                    Login
+                                </a>
+                            </li>
+                        ) : (
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
+                                    Logout
+                                </a>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>
