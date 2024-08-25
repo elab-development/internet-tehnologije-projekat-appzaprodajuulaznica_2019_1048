@@ -6,7 +6,7 @@ const TicketsPage = () => {
         <div>
             <h1>Choose event and book your ticket!</h1>
             {tickets.map((ticket) => (
-                <Ticket />
+                <Ticket ticket={ticket} />
             ))}
         </div>
     );
