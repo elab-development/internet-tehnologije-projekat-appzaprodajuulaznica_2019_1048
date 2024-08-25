@@ -22,7 +22,7 @@ function LoginPage(addToken) {
     function loginUser(e) {
         e.preventDefault();
         axios
-            .post("http://127.0.0.1:8000/api/login", userData)
+            .post("api/login", userData)
             .then((response) => {
                 console.log(response.data);
 

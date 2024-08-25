@@ -23,7 +23,7 @@ const RegisterPage = () => {
     function registerUser(e) {
         e.preventDefault();
         axios
-            .post("http://127.0.0.1:8000/api/register", userData)
+            .post("api/register", userData)
             .then((response) => {
                 console.log(response.data);
                 navigate("/login");
