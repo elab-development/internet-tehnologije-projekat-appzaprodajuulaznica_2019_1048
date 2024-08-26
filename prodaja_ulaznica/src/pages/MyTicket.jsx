@@ -1,4 +1,6 @@
 const MyTicket = ({ ticket }) => {
+
+
     return (
         <div>
             {ticket.booked === 1 ? (

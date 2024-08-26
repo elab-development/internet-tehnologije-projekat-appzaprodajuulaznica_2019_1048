@@ -18,13 +18,6 @@ function App() {
     venue_id: "",
     booked: 0,
   });
-
-
-
-
-
-
-
   useEffect(() => {
     if (tickets == null) {
       axios.get("api/tickets").then((response) => {
@@ -41,7 +34,7 @@ function App() {
         if (ticket.booked === 0) {
           ticket.booked = 1;
           setTicketData(ticket);
-          console.log("Ticket is booked!");
+          console.log("Ticket is booked! ");
           console.log(ticket);
           console.log(tickets);
           axios({
