@@ -43,11 +43,45 @@ function App() {
           console.log("Ticket is booked!");
           console.log(ticket);
           console.log(tickets);
+          axios({
+            method: "put",
+            url: "api/tickets/" + ticketId,
+            data: {
+              title: ticket.title,
+              description: ticket.description,
+              artist_id: ticket.artist.id,
+              venue_id: ticket.venue.id,
+              booked: ticket.booked,
+            },
+            headers: {
+              "Content-Type": "application/json; charset=UTF-8",
+              Authorization:
+                "Bearer " + window.sessionStorage.getItem("auth_token"),
+            },
+          })
+            .then((response) => {
+              console.log(response.data);
 
+            })
+            .catch((error) => {
+              console.log(error);
+            });
 
+        }
+      }
+    });
+  };
 
-
-
+  const cancelTicket = (id) => {
+    tickets.map((ticket) => {
+      const ticketId = id;
+      if (ticket.id === id) {
+        if (ticket.booked === 1) {
+          ticket.booked = 0;
+          setTicketData(ticket);
+          console.log("Ticket is canceled!");
+          console.log(ticket);
+          console.log(tickets);
           axios({
             method: "put",
             url: "api/tickets/" + ticketId,
@@ -85,7 +119,7 @@ function App() {
         <Route path="/" element={<NavBar />}>
           <Route
             path="tickets"
-            element={<TicketsPage tickets={tickets} bookTicket={bookTicket} />}
+            element={<TicketsPage tickets={tickets} bookTicket={bookTicket} cancelTicket={cancelTicket} />}
           />
           <Route
             path="mytickets"

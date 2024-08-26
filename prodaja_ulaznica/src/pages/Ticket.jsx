@@ -1,4 +1,4 @@
-const Ticket = ({ ticket, bookTicket }) => {
+const Ticket = ({ ticket, bookTicket, cancelTicket }) => {
     return (
         <div
             className="card"
@@ -40,6 +40,7 @@ const Ticket = ({ ticket, bookTicket }) => {
                     <button
                         type="button"
                         className="btn btn-primary btn-lg"
+                        onClick={() => cancelTicket(ticket.id)}
                         style={{
                             paddingLeft: 2.5 + "rem",
                             paddingRight: 2.5 + "rem",
