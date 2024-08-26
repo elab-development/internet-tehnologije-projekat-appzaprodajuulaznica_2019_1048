@@ -1,20 +1,70 @@
 import React from "react";
 
-const Ticket = ({ ticket }) => {
+const Ticket = ({ ticket, bookTicket }) => {
     return (
-        <div className="card">
-            <div className="card-header">Featured</div>
-            <div className="card-body">
+        <div
+            className="card"
+            style={{
+                marginTop: 5 + "rem",
+                marginBottom: 5 + "rem",
+                marginLeft: 30 + "rem",
+                marginRight: 30 + "rem",
+                backgroundColor: "black",
+                color: "white",
+            }}
+        >
+            <div
+                className="card-body"
+                style={{
+                    marginTop: 2 + "rem",
+                    marginBottom: 2 + "rem",
+                    backgroundColor: "black",
+                    textAlign: "center",
+                }}
+            >
                 <h5 className="card-title">{ticket.title}</h5>
-                <p className="card-text">
-                    {ticket.artist.about}
-                </p>
-                <a href="#" className="btn btn-primary">
-                    Book Ticket
-                </a>
+                <p className="card-text">{ticket.artist.about}</p>
+                {ticket.booked === 0 ? (
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg"
+                        onClick={() => bookTicket(ticket.id)}
+                        style={{
+                            paddingLeft: 2.5 + "rem",
+                            paddingRight: 2.5 + "rem",
+                            backgroundColor: "green",
+                            textAlign: "center",
+                        }}
+                    >
+                        Book
+                    </button>
+                ) : (
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg"
+                        style={{
+                            paddingLeft: 2.5 + "rem",
+                            paddingRight: 2.5 + "rem",
+                            backgroundColor: "red",
+                            textAlign: "center",
+                        }}
+                    >
+                        Booked
+                    </button>
+                )}
+
             </div>
-            <div className="card-footer text-muted">{ticket.artist.genre}</div>
-        </div>
+            <div
+                className="card-footer "
+                style={{
+                    backgroundColor: "white",
+                    color: "black",
+                    textAlign: "center",
+                }}
+            >
+                {ticket.artist.genre}
+            </div>
+        </div >
     );
 };
 
