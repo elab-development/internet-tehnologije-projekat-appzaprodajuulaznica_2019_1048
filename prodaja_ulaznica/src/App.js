@@ -4,6 +4,7 @@ import RegisterPage from "./pages/RegisterPage";
 import NavBar from "./pages/NavBar";
 import TicketsPage from "./pages/TicketsPage";
 import MyTicketsPage from "./pages/MyTicketsPage";
+import HomePage from "./pages/HomePage";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -116,16 +117,17 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<NavBar />}>
-          <Route
-            path="tickets"
-            element={<TicketsPage tickets={tickets} bookTicket={bookTicket} cancelTicket={cancelTicket} />}
-          />
-          <Route
-            path="mytickets"
-            element={<MyTicketsPage tickets={tickets} />}
-          />
-        </Route>
+        <Route path="/" element={<div><NavBar /><HomePage /></div>} />
+
+        <Route
+          path="tickets"
+          element={<div><NavBar /><TicketsPage tickets={tickets} bookTicket={bookTicket} cancelTicket={cancelTicket} /></div>}
+        />
+        <Route
+          path="mytickets"
+          element={<div><NavBar /><MyTicketsPage tickets={tickets} /></div>}
+        />
+
       </Routes>
     </BrowserRouter>
   );
