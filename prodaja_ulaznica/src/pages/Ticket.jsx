@@ -1,5 +1,3 @@
-import React from "react";
-
 const Ticket = ({ ticket, bookTicket }) => {
     return (
         <div
@@ -52,7 +50,6 @@ const Ticket = ({ ticket, bookTicket }) => {
                         Booked
                     </button>
                 )}
-
             </div>
             <div
                 className="card-footer "
@@ -64,7 +61,7 @@ const Ticket = ({ ticket, bookTicket }) => {
             >
                 {ticket.artist.genre}
             </div>
-        </div >
+        </div>
     );
 };
 

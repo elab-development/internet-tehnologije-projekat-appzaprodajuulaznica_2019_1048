@@ -9,8 +9,7 @@ import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [myTickets, setMyTickets] = useState();
-  const [tickets, setTickets] = useState();
+  const [tickets, setTickets] = useState(null);
   const [ticketData, setTicketData] = useState({
     title: "",
     description: "",
@@ -18,6 +17,12 @@ function App() {
     venue_id: "",
     booked: 0,
   });
+
+
+
+
+
+
 
   useEffect(() => {
     if (tickets == null) {
@@ -37,6 +42,11 @@ function App() {
           setTicketData(ticket);
           console.log("Ticket is booked!");
           console.log(ticket);
+          console.log(tickets);
+
+
+
+
 
           axios({
             method: "put",
@@ -44,8 +54,8 @@ function App() {
             data: {
               title: ticket.title,
               description: ticket.description,
-              artist_id: ticket.artist_id,
-              venue_id: ticket.venue_id,
+              artist_id: ticket.artist.id,
+              venue_id: ticket.venue.id,
               booked: ticket.booked,
             },
             headers: {
@@ -56,10 +66,12 @@ function App() {
           })
             .then((response) => {
               console.log(response.data);
+
             })
             .catch((error) => {
               console.log(error);
             });
+
         }
       }
     });
@@ -77,7 +89,7 @@ function App() {
           />
           <Route
             path="mytickets"
-            element={<MyTicketsPage myTickets={myTickets} />}
+            element={<MyTicketsPage tickets={tickets} />}
           />
         </Route>
       </Routes>
