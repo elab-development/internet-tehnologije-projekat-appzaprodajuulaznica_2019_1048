@@ -18,6 +18,7 @@ class TicketResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->resource->id,
             'type' => $this->resource->type,
             'event' => new EventResource($this->resource->event),
             'user' => new UserResource($this->resource->user),

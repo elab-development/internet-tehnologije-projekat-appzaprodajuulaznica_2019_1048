@@ -40,7 +40,7 @@ class TicketController extends Controller
         $validator = Validator::make($request->all(), [
             'type' => 'required|string|max:50',
             'event_id' => 'required',
-            'user_id' => 'required'
+            //'user_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -49,12 +49,12 @@ class TicketController extends Controller
 
         $ticket = Ticket::create([
             'type' => $request->type,
-            'venue_id' => $request->venue_id,
+            'event_id' => $request->event_id,
             'user_id' => Auth::user()->id,
 
         ]);
 
-        return response()->json(['Ticket booked successfully.', new TicketResource($ticket)]);
+        return response()->json(['Ticket bought successfully.', new TicketResource($ticket)]);
     }
 
     /**
