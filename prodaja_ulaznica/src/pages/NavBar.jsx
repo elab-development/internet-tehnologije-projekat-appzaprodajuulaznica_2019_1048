@@ -46,8 +46,8 @@ const NavBar = () => {
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/tickets">
-                                    Tickets
+                                <a className="nav-link" href="/events">
+                                    Events
                                 </a>
                             </li>
                             <li className="nav-item">

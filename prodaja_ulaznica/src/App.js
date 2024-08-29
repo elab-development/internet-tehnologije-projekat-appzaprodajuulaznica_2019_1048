@@ -2,7 +2,7 @@ import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import NavBar from "./pages/NavBar";
-import TicketsPage from "./pages/TicketsPage";
+import EventsPage from "./pages/EventsPage";
 import MyTicketsPage from "./pages/MyTicketsPage";
 import HomePage from "./pages/HomePage";
 import { useState, useEffect } from "react";
@@ -10,42 +10,64 @@ import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [tickets, setTickets] = useState(null);
+  const [events, setEvents] = useState(null);
   const [ticketData, setTicketData] = useState({
-    title: "",
-    description: "",
-    artist_id: "",
-    venue_id: "",
-    booked: 0,
+    type: "",
+    event_id: "",
+    //user_id: "",
   });
   useEffect(() => {
-    if (tickets == null) {
-      axios.get("api/tickets").then((response) => {
+    if (events == null) {
+      axios.get("api/events").then((response) => {
         console.log(response.data);
-        setTickets(response.data.tickets);
+        setEvents(response.data.events);
       });
     }
-  }, [tickets]);
+  }, [events]);
 
-  const bookTicket = (id) => {
-    tickets.map((ticket) => {
-      const ticketId = id;
-      if (ticket.id === id) {
-        if (ticket.booked === 0) {
-          ticket.booked = 1;
-          setTicketData(ticket);
-          console.log("Ticket is booked! ");
-          console.log(ticket);
-          console.log(tickets);
+  function buyTicket(ticketType, eventID) {
+    setTicketData([{ type: ticketType, event_id: eventID }]);
+    console.log(ticketData);
+    axios({
+      method: "post",
+      url: "api/tickets",
+      data: {
+        type: ticketType,
+        event_id: eventID,
+      },
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        Authorization:
+          "Bearer " + window.sessionStorage.getItem("auth_token"),
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  /*const bookEvent = (id) => {
+    events.map((event) => {
+      const eventId = id;
+      if (event.id === id) {
+        if (event.booked === 0) {
+          event.booked = 1;
+
+          console.log("Ticket for the event is bought! ");
+          console.log(event);
+          console.log(events);
           axios({
             method: "put",
-            url: "api/tickets/" + ticketId,
+            url: "api/events/" + eventId,
             data: {
-              title: ticket.title,
-              description: ticket.description,
-              artist_id: ticket.artist.id,
-              venue_id: ticket.venue.id,
-              booked: ticket.booked,
+              title: event.title,
+              description: event.description,
+              artist_id: event.artist.id,
+              venue_id: event.venue.id,
+              booked: event.booked,
             },
             headers: {
               "Content-Type": "application/json; charset=UTF-8",
@@ -64,27 +86,27 @@ function App() {
         }
       }
     });
-  };
+  };*/
 
-  const cancelTicket = (id) => {
-    tickets.map((ticket) => {
-      const ticketId = id;
-      if (ticket.id === id) {
-        if (ticket.booked === 1) {
-          ticket.booked = 0;
-          setTicketData(ticket);
-          console.log("Ticket is canceled!");
-          console.log(ticket);
-          console.log(tickets);
+  /*const cancelEvent = (id) => {
+    events.map((event) => {
+      const eventId = id;
+      if (event.id === id) {
+        if (event.booked === 1) {
+          event.booked = 0;
+          setEventData(event);
+          console.log("Event is canceled!");
+          console.log(event);
+          console.log(events);
           axios({
             method: "put",
-            url: "api/tickets/" + ticketId,
+            url: "api/events/" + eventId,
             data: {
-              title: ticket.title,
-              description: ticket.description,
-              artist_id: ticket.artist.id,
-              venue_id: ticket.venue.id,
-              booked: ticket.booked,
+              title: event.title,
+              description: event.description,
+              artist_id: event.artist.id,
+              venue_id: event.venue.id,
+              booked: event.booked,
             },
             headers: {
               "Content-Type": "application/json; charset=UTF-8",
@@ -103,24 +125,41 @@ function App() {
         }
       }
     });
-  };
+  };*/
 
   return (
     <BrowserRouter className="App">
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<div><NavBar /><HomePage /></div>} />
+        <Route
+          path="/"
+          element={
+            <div>
+              <NavBar />
+              <HomePage />
+            </div>
+          }
+        />
 
         <Route
-          path="tickets"
-          element={<div><NavBar /><TicketsPage tickets={tickets} bookTicket={bookTicket} cancelTicket={cancelTicket} /></div>}
+          path="events"
+          element={
+            <div>
+              <NavBar />
+              <EventsPage events={events} buyTicket={buyTicket} />
+            </div>
+          }
         />
         <Route
           path="mytickets"
-          element={<div><NavBar /><MyTicketsPage tickets={tickets} /></div>}
+          element={
+            <div>
+              <NavBar />
+              <MyTicketsPage events={events} />
+            </div>
+          }
         />
-
       </Routes>
     </BrowserRouter>
   );

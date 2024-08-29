@@ -31,6 +31,10 @@ function LoginPage(addToken) {
                         "auth_token",
                         response.data.access_token
                     );
+                    window.sessionStorage.setItem(
+                        "user_id",
+                        response.data.user_id
+                    );
                     navigate("/");
                 }
 
