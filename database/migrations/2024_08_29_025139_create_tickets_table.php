@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignIdsInTicketsTable extends Migration
+class CreateTicketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddForeignIdsInTicketsTable extends Migration
      */
     public function up()
     {
-        Schema::table('tickets', function (Blueprint $table) {
-            $table->foreignId('artist_id');
-            $table->foreignId('venue_id');
+        Schema::create('tickets', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->foreignId('event_id');
+            $table->foreignId('user_id');
+            $table->timestamps();
         });
     }
 
@@ -26,9 +29,6 @@ class AddForeignIdsInTicketsTable extends Migration
      */
     public function down()
     {
-        Schema::table('tickets', function (Blueprint $table) {
-            $table->dropForeign('artist_id');
-            $table->dropForeign('venue_id');
-        });
+        Schema::dropIfExists('tickets');
     }
 }

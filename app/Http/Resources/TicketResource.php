@@ -18,13 +18,9 @@ class TicketResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->resource->id,
-            'title' => $this->resource->title,
-            'description' => $this->resource->description,
-            'artist' => new ArtistResource($this->resource->artist),
-            'venue' => new VenueResource($this->resource->venue),
+            'type' => $this->resource->type,
+            'event' => new EventResource($this->resource->event),
             'user' => new UserResource($this->resource->user),
-            'booked' => $this->resource->booked
         ];
     }
 }

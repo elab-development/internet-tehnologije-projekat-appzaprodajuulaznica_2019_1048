@@ -11,22 +11,36 @@ use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $tickets = Ticket::all();
         return new TicketCollection($tickets);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create() {}
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:50',
-            'description' => 'required|string|max:255',
-            'artist_id' => 'required',
-            'venue_id' => 'required',
-            'booked' => 'required',
-            //'user_id' => 'required'
+            'type' => 'required|string|max:50',
+            'event_id' => 'required',
+            'user_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -34,34 +48,50 @@ class TicketController extends Controller
         }
 
         $ticket = Ticket::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'artist_id' => $request->artist_id,
+            'type' => $request->type,
             'venue_id' => $request->venue_id,
             'user_id' => Auth::user()->id,
-            'booked' => $request->booked
+
         ]);
 
         return response()->json(['Ticket booked successfully.', new TicketResource($ticket)]);
     }
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Ticket  $ticket
+     * @return \Illuminate\Http\Response
+     */
     public function show(Ticket $ticket)
     {
         return new TicketResource($ticket);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Ticket  $ticket
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Ticket $ticket)
+    {
+        //
+    }
 
-
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Ticket  $ticket
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, Ticket $ticket)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:50',
-            'description' => 'required|string|max:255',
-            'artist_id' => 'required',
-            'venue_id' => 'required',
-            'booked' => 'required'
-            //'user_id' => 'required'
+            'type' => 'required|string|max:50',
+            'event_id' => 'required',
+            'user_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -69,11 +99,9 @@ class TicketController extends Controller
         }
 
 
-        $ticket->title =  $request->title;
-        $ticket->description =  $request->description;
-        $ticket->artist_id =  $request->artist_id;
-        $ticket->venue_id =  $request->venue_id;
-        $ticket->booked =  $request->booked;
+        $ticket->type =  $request->type;
+        $ticket->event_id =  $request->event_id;
+        $ticket->user_id =  $request->user_id;
 
 
         $ticket->save();
@@ -81,7 +109,12 @@ class TicketController extends Controller
         return response()->json(['Ticket updated successfully.', new TicketResource($ticket)]);
     }
 
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Ticket  $ticket
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Ticket $ticket)
     {
         $ticket->delete();
