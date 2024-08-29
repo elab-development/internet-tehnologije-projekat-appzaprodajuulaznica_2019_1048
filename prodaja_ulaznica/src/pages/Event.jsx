@@ -4,9 +4,9 @@ const Event = ({ event, buyTicket }) => {
             className="card"
             style={{
                 marginTop: 5 + "rem",
-                marginBottom: 5 + "rem",
-                marginLeft: 30 + "rem",
-                marginRight: 30 + "rem",
+
+                margin: "auto",
+                width: 30 + "rem",
                 backgroundColor: "black",
                 color: "white",
             }}
@@ -21,7 +21,10 @@ const Event = ({ event, buyTicket }) => {
                 }}
             >
                 <h5 className="card-title">{event.title}</h5>
-                <p className="card-text">{event.artist.about}</p>
+                <p className="card-text" style={{
+                    marginBottom: 2 + "rem",
+                    textAlign: "center",
+                }}>{event.artist.about}</p>
                 <button
                     type="button"
                     className="btn btn-primary btn-lg"
@@ -30,6 +33,7 @@ const Event = ({ event, buyTicket }) => {
                         paddingLeft: 2.5 + "rem",
                         paddingRight: 2.5 + "rem",
                         backgroundColor: "green",
+
                         textAlign: "center",
                     }}
                 >
@@ -43,6 +47,7 @@ const Event = ({ event, buyTicket }) => {
                         paddingLeft: 2.5 + "rem",
                         paddingRight: 2.5 + "rem",
                         backgroundColor: "red",
+                        marginLeft: 2 + "rem",
                         textAlign: "center",
                     }}
                 >

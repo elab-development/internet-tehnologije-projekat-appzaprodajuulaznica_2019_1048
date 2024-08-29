@@ -1,7 +1,6 @@
 import React from "react";
 import Event from "./Event";
 
-
 const EventsPage = ({ events, buyTicket }) => {
     return (
         <div>
@@ -10,7 +9,7 @@ const EventsPage = ({ events, buyTicket }) => {
                 marginTop: 5 + "rem",
             }}>Choose event and book your event!</h1>
             {events == null ? <></> : events.map((event) => (
-                <Event event={event} key={event.id} buyTicket={buyTicket} />
+                < Event event={event} key={event.id} buyTicket={buyTicket} />
             ))}
         </div>
     );

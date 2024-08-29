@@ -11,6 +11,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const [events, setEvents] = useState(null);
+  const [tickets, setTickets] = useState(null);
+  const [userID, setUserID] = useState(null);
+
   const [ticketData, setTicketData] = useState({
     type: "",
     event_id: "",
@@ -19,11 +22,22 @@ function App() {
   useEffect(() => {
     if (events == null) {
       axios.get("api/events").then((response) => {
+        console.log("EVENTS");
         console.log(response.data);
         setEvents(response.data.events);
       });
     }
-  }, [events]);
+    if (tickets == null) {
+      axios.get("api/tickets").then((response) => {
+        console.log("TICKETS");
+        console.log(response.data);
+        setTickets(response.data.tickets);
+      });
+    }
+
+  }, []);
+
+
 
   function buyTicket(ticketType, eventID) {
     setTicketData([{ type: ticketType, event_id: eventID }]);
@@ -156,7 +170,7 @@ function App() {
           element={
             <div>
               <NavBar />
-              <MyTicketsPage events={events} />
+              <MyTicketsPage tickets={tickets} userID={window.sessionStorage.getItem("user_id")} />
             </div>
           }
         />
