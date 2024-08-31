@@ -35,6 +35,7 @@ function LoginPage(addToken) {
                         "user_id",
                         response.data.user_id
                     );
+
                     navigate("/");
                 }
 

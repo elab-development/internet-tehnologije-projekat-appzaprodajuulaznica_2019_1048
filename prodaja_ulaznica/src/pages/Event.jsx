@@ -1,10 +1,9 @@
-const Event = ({ event, buyTicket }) => {
+const Event = ({ event, buyTicket, deleteEvent }) => {
     return (
         <div
             className="card"
             style={{
                 marginTop: 5 + "rem",
-
                 margin: "auto",
                 width: 30 + "rem",
                 backgroundColor: "black",
@@ -25,24 +24,42 @@ const Event = ({ event, buyTicket }) => {
                     marginBottom: 2 + "rem",
                     textAlign: "center",
                 }}>{event.artist.about}</p>
-                <button
-                    type="button"
-                    className="btn btn-primary btn-lg"
-                    onClick={() => buyTicket("standard", event.id)}
-                    style={{
-                        paddingLeft: 2.5 + "rem",
-                        paddingRight: 2.5 + "rem",
-                        backgroundColor: "green",
+                {window.sessionStorage.getItem("user_id") != 1 ?
+                    <button
+                        type="button"
+                        className="btn btn-primary btn-lg"
+                        onClick={() => buyTicket("standard", event.id)}
+                        style={{
+                            paddingLeft: 2.5 + "rem",
+                            paddingRight: 2.5 + "rem",
+                            backgroundColor: "green",
 
-                        textAlign: "center",
-                    }}
-                >
-                    Buy Standard
-                </button>
-                <button
+                            textAlign: "center",
+                        }}
+                    >
+                        Buy Standard
+                    </button>
+                    : <></>}
+                {window.sessionStorage.getItem("user_id") != 1 ?
+                    <button
+                        type="button"
+                        className="btn btn-warning btn-lg"
+                        onClick={() => buyTicket("vip", event.id)}
+                        style={{
+                            paddingLeft: 2.5 + "rem",
+                            paddingRight: 2.5 + "rem",
+                            //backgroundColor: "red",
+                            marginLeft: 2 + "rem",
+                            textAlign: "center",
+                        }}
+                    >
+                        Buy VIP
+                    </button>
+                    : <></>}
+                {window.sessionStorage.getItem("user_id") == 1 ? <button
                     type="button"
                     className="btn btn-primary btn-lg"
-                    onClick={() => buyTicket("vip", event.id)}
+                    onClick={() => deleteEvent(event.id)}
                     style={{
                         paddingLeft: 2.5 + "rem",
                         paddingRight: 2.5 + "rem",
@@ -51,8 +68,9 @@ const Event = ({ event, buyTicket }) => {
                         textAlign: "center",
                     }}
                 >
-                    Buy VIP
-                </button>
+                    Delete event
+                </button> : <></>}
+
             </div>
             <div
                 className="card-footer "

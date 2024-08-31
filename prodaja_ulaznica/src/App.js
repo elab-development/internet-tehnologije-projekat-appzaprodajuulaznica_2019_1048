@@ -15,16 +15,24 @@ function App() {
   //const [userID, setUserID] = useState(null);
 
 
-
-
-
-
+  /*const URL = "https://api.dictionaryapi.dev/api/v2/entries/en/hello";
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetch(URL);
+      result.json().then(json => {
+        console.log(json);
+      })
+      //setProducts(response.data.products);
+    }
+    fetchData();
+  }, [])*/
 
   const [ticketData, setTicketData] = useState({
     type: "",
     event_id: "",
     //user_id: "",
   });
+
   useEffect(() => {
 
     if (events == null) {
@@ -64,6 +72,24 @@ function App() {
       .then((response) => {
 
 
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  function deleteEvent(eventID) {
+    axios({
+      method: "delete",
+      url: "api/events/" + eventID,
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+        Authorization:
+          "Bearer " + window.sessionStorage.getItem("auth_token"),
+      },
+    })
+      .then((response) => {
         console.log(response.data);
       })
       .catch((error) => {
@@ -169,7 +195,7 @@ function App() {
           element={
             <div>
               <NavBar />
-              <EventsPage events={events} buyTicket={buyTicket} />
+              <EventsPage events={events} buyTicket={buyTicket} deleteEvent={deleteEvent} />
             </div>
           }
         />
